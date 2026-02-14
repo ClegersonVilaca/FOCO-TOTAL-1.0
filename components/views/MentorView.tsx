@@ -134,6 +134,30 @@ const MentorView: React.FC<MentorViewProps> = ({ stats, saveStats }) => {
                 <div ref={chatEndRef} />
             </div>
 
+            <div className="px-6 py-3 border-t border-white/5 bg-black/10 flex gap-2 overflow-x-auto no-scrollbar">
+                {[
+                    { label: '🎯 Estratégia', prompt: 'Crie uma estratégia de estudo para as minhas matérias atuais.' },
+                    { label: '💡 Explicar', prompt: 'Explique o conceito de [ASSUNTO] de forma simples.' },
+                    { label: '🔥 Motivação', prompt: 'Me dê uma dose de motivação para continuar focado agora!' },
+                    { label: '📝 Quiz', prompt: 'Faça 3 perguntas rápidas sobre as matérias que estou estudando.' }
+                ].map((action, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => {
+                            setMentorInput(action.prompt);
+                            // Auto-send motvations or strategies if they don't need placeholders
+                            if (!action.prompt.includes('[ASSUNTO]')) {
+                                // Small timeout to ensure state update before send logic (or just update and call handle)
+                                setTimeout(() => document.getElementById('mentor-send-btn')?.click(), 10);
+                            }
+                        }}
+                        className="whitespace-nowrap px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-xs font-bold hover:bg-foco-accent hover:text-foco-bg transition-all"
+                    >
+                        {action.label}
+                    </button>
+                ))}
+            </div>
+
             <footer className="p-6 bg-black/20 border-t border-white/5">
                 <div className="flex gap-3">
                     <input
@@ -146,6 +170,7 @@ const MentorView: React.FC<MentorViewProps> = ({ stats, saveStats }) => {
                         className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-foco-accent transition-all placeholder:opacity-30"
                     />
                     <button
+                        id="mentor-send-btn"
                         onClick={handleSendMentorMessage}
                         disabled={isMentorLoading || !mentorInput.trim()}
                         className="bg-foco-accent text-foco-bg p-4 rounded-2xl shadow-lg shadow-foco-accent/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:scale-100"
