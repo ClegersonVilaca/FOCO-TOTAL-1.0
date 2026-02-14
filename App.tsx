@@ -13,7 +13,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { UserStats, TimerStatus, AppView } from './types';
-import { STORAGE_KEY, INITIAL_STATS, SHOP_ITEMS } from './constants';
+import { STORAGE_KEY, INITIAL_STATS } from './constants';
 import { getMotivationalTip } from './services/geminiService';
 import { supabase, saveUserStats, loadUserStats } from './services/supabaseService';
 
@@ -22,9 +22,7 @@ import Sidebar from './components/Sidebar';
 import AuthScreen from './components/AuthScreen';
 import FocusView from './components/views/FocusView';
 import PlannerView from './components/views/PlannerView';
-import MentorView from './components/views/MentorView';
 import EvolutionView from './components/views/EvolutionView';
-import StoreView from './components/views/StoreView';
 
 const App: React.FC = () => {
   // Navigation & Auth State
@@ -139,18 +137,8 @@ const App: React.FC = () => {
   // --- Theme Selection Logic ---
 
   const selectTheme = (themeId: string) => {
-    const isBasic = themeId === 'default' || themeId === 'theme-sepia';
-    const isOwned = stats.itensComprados.some(id => {
-      const item = SHOP_ITEMS.find(i => i.id === id);
-      return item?.valor === themeId;
-    });
-
-    if (isBasic || isOwned) {
-      saveStats({ ...stats, activeTheme: themeId });
-      setShowThemeSelector(false);
-    } else {
-      alert("Este tema é exclusivo! Adquira-o na Loja da Mente usando seus Neurônios.");
-    }
+    saveStats({ ...stats, activeTheme: themeId });
+    setShowThemeSelector(false);
   };
 
   // --- Timer Logic ---
@@ -163,6 +151,7 @@ const App: React.FC = () => {
 
   const stopTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
+
     setTimerStatus('idle');
     setTimeLeft(initialTime);
     if (ambientAudioRef.current) { ambientAudioRef.current.pause(); ambientAudioRef.current = null; }
@@ -201,15 +190,10 @@ const App: React.FC = () => {
       : [...stats.historicoEstudo, todayStr];
 
     let reward = isComboActive ? 20 : 10;
-    if (stats.multiplierActive) {
-      reward *= 2;
-    }
 
     saveStats({
       ...stats,
-      neuronios: stats.neuronios + reward,
       totalNeuroniosGanhos: (stats.totalNeuroniosGanhos || 0) + reward,
-      multiplierActive: false,
       sessoesConcluidas: stats.sessoesConcluidas + 1,
       horasDeFoco: stats.horasDeFoco + (initialTime / 3600),
       historicoEstudo: newHistory
@@ -280,16 +264,8 @@ const App: React.FC = () => {
               <button onClick={() => selectTheme('default')} className={`flex items-center gap-3 p-4 rounded-2xl border transition-all ${stats.activeTheme === 'default' ? 'bg-foco-accent/10 border-foco-accent' : 'border-white/5 hover:bg-white/5'}`}>
                 <Moon className="text-indigo-400" size={20} /> <span className="text-sm font-bold">Foco Noturno</span>
               </button>
-              <button onClick={() => selectTheme('theme-sepia')} className={`flex items-center gap-3 p-4 rounded-2xl border transition-all ${stats.activeTheme === 'theme-sepia' ? 'bg-foco-accent/10 border-foco-accent' : 'border-white/5 hover:bg-white/5'}`}>
-                <Sun className="text-foco-alert" size={20} /> <span className="text-sm font-bold">Tema Leitura (Sépia)</span>
-              </button>
-              <button onClick={() => selectTheme('theme-forest')} className={`flex items-center gap-3 p-4 rounded-2xl border transition-all ${stats.activeTheme === 'theme-forest' ? 'bg-foco-accent/10 border-foco-accent' : 'border-white/5 hover:bg-white/5'}`}>
-                <Trees className="text-green-500" size={20} /> <span className="text-sm font-bold">Floresta</span>
-                {!stats.itensComprados.some(id => SHOP_ITEMS.find(i => i.id === id)?.valor === 'theme-forest') && <Zap size={12} className="ml-auto opacity-30" />}
-              </button>
-              <button onClick={() => selectTheme('theme-ocean')} className={`flex items-center gap-3 p-4 rounded-2xl border transition-all ${stats.activeTheme === 'theme-ocean' ? 'bg-foco-accent/10 border-foco-accent' : 'border-white/5 hover:bg-white/5'}`}>
-                <Waves className="text-blue-500" size={20} /> <span className="text-sm font-bold">Oceano</span>
-                {!stats.itensComprados.some(id => SHOP_ITEMS.find(i => i.id === id)?.valor === 'theme-ocean') && <Zap size={12} className="ml-auto opacity-30" />}
+              <button onClick={() => selectTheme('theme-light')} className={`flex items-center gap-3 p-4 rounded-2xl border transition-all ${stats.activeTheme === 'theme-light' ? 'bg-foco-accent/10 border-foco-accent' : 'border-white/5 hover:bg-white/5'}`}>
+                <Sun className="text-foco-accent" size={20} /> <span className="text-sm font-bold">Tema Elegante</span>
               </button>
             </div>
           </div>
@@ -347,13 +323,6 @@ const App: React.FC = () => {
             />
           )}
 
-          {currentView === 'mentor' && (
-            <MentorView
-              stats={stats}
-              saveStats={saveStats}
-            />
-          )}
-
           {currentView === 'evolution' && (
             <EvolutionView
               stats={stats}
@@ -361,12 +330,6 @@ const App: React.FC = () => {
             />
           )}
 
-          {currentView === 'store' && (
-            <StoreView
-              stats={stats}
-              saveStats={saveStats}
-            />
-          )}
         </div>
       </main>
 

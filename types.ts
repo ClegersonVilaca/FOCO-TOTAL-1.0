@@ -41,14 +41,6 @@ export interface CustomAudio {
   tipo: 'alarm' | 'ambient';
 }
 
-export interface ShopItem {
-  id: string;
-  nome: string;
-  descricao: string;
-  preco: number;
-  tipo: 'tema' | 'som' | 'consumable';
-  valor: string;
-}
 
 export interface ChatMessage {
   role: 'user' | 'model';
@@ -57,14 +49,10 @@ export interface ChatMessage {
 }
 
 export interface UserStats {
-  neuronios: number;
-  totalNeuroniosGanhos: number; // Para sistema de níveis
-  multiplierActive: boolean; // Flag para o item 2x
+  totalNeuroniosGanhos: number; // XP Total
   sessoesConcluidas: number;
   horasDeFoco: number;
   revisoesAgendadas: Review[];
-  itensComprados: string[];
-  chatHistory: ChatMessage[]; // Histórico do Mentor IA
   activeTheme: string;
   activeSound: string | null;
   activeAlarm: string | null;
@@ -74,5 +62,5 @@ export interface UserStats {
   historicoEstudo: string[]; // Formato YYYY-MM-DD
 }
 
-export type AppView = 'focus' | 'planner' | 'store' | 'evolution' | 'mentor';
+export type AppView = 'focus' | 'planner' | 'evolution';
 export type TimerStatus = 'idle' | 'running' | 'finished';

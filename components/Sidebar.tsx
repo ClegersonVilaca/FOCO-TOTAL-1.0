@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       ${stats.sidebarOpen ? 'lg:w-72' : 'lg:w-24'} 
       ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       fixed lg:sticky top-0 left-0 sidebar-container z-[120] lg:z-50
-      border-r border-white/5 p-4 flex flex-col gap-10 bg-foco-card/80 lg:bg-black/40 backdrop-blur-3xl transition-all duration-500 ease-in-out w-72 lg:w-auto
+      border-r border-foco-text/10 p-4 flex flex-col gap-10 bg-foco-card/80 lg:bg-foco-bg/40 backdrop-blur-3xl transition-all duration-500 ease-in-out w-72 lg:w-auto min-h-screen lg:h-screen
     `}>
       <div className="hidden lg:flex items-center gap-4 py-6 px-3">
         <div className="w-12 h-12 bg-foco-accent rounded-[14px] flex items-center justify-center text-foco-bg font-black text-2xl shrink-0">FT</div>
@@ -78,9 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <nav className="flex-1 space-y-3">
         <SidebarItem active={currentView === 'focus'} onClick={() => { setCurrentView('focus'); setIsMobileMenuOpen(false); }} icon={<Zap size={22} />} label="Painel de Foco" expanded={stats.sidebarOpen || isMobileMenuOpen} />
         <SidebarItem active={currentView === 'planner'} onClick={() => { setCurrentView('planner'); setIsMobileMenuOpen(false); }} icon={<LayoutDashboard size={22} />} label=" HUB Acadêmico" expanded={stats.sidebarOpen || isMobileMenuOpen} />
-        <SidebarItem active={currentView === 'mentor'} onClick={() => { setCurrentView('mentor'); setIsMobileMenuOpen(false); }} icon={<MessageSquare size={22} />} label="Mentor IA" expanded={stats.sidebarOpen || isMobileMenuOpen} />
         <SidebarItem active={currentView === 'evolution'} onClick={() => { setCurrentView('evolution'); setIsMobileMenuOpen(false); }} icon={<TrendingUp size={22} />} label="Evolução" expanded={stats.sidebarOpen || isMobileMenuOpen} />
-        <SidebarItem active={currentView === 'store'} onClick={() => { setCurrentView('store'); setIsMobileMenuOpen(false); }} icon={<ShoppingBag size={22} />} label="Loja da Mente" expanded={stats.sidebarOpen || isMobileMenuOpen} />
       </nav>
 
       <div className="mt-auto pt-6 border-t border-white/5 space-y-4">
