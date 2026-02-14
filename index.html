@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foco Total - Sua Mente em Alta Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'foco-bg': 'var(--foco-bg)',
+              'foco-card': 'var(--foco-card)',
+              'foco-text': 'var(--foco-text)',
+              'foco-secondary': 'var(--foco-secondary)',
+              'foco-accent': 'var(--foco-accent)',
+              'foco-alert': 'var(--foco-alert)',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --foco-bg: #121212;
+        --foco-card: #1B1B1B;
+        --foco-text: #EAEAEA;
+        --foco-secondary: #A7A7A7;
+        --foco-accent: #68D391;
+        --foco-alert: #F6AD55;
+      }
+
+      .theme-sepia {
+        --foco-bg: #F5F1E8;
+        --foco-card: #EBE6D9;
+        --foco-text: #433422;
+        --foco-secondary: #7A6A53;
+        --foco-accent: #9B7E4F;
+        --foco-alert: #C17F59;
+      }
+
+      .theme-forest {
+        --foco-bg: #0d1a12;
+        --foco-card: #142a1d;
+        --foco-text: #E6FFFA;
+        --foco-secondary: #81E6D9;
+        --foco-accent: #48BB78;
+        --foco-alert: #F6E05E;
+        background-image: radial-gradient(circle at 50% -20%, #1a3a2a 0%, #0d1a12 70%);
+      }
+
+      .theme-ocean {
+        --foco-bg: #0a192f;
+        --foco-card: #112240;
+        --foco-text: #E6F1FF;
+        --foco-secondary: #8892B0;
+        --foco-accent: #4299E1;
+        --foco-alert: #F56565;
+        background-image: radial-gradient(circle at 50% -20%, #1b3a6d 0%, #0a192f 70%);
+      }
+
+      body {
+        background-color: var(--foco-bg);
+        color: var(--foco-text);
+        font-family: 'Inter', sans-serif;
+        transition: background-color 0.5s ease, color 0.5s ease;
+        min-height: 100vh;
+      }
+
+      .bg-foco-bg, .bg-foco-card, .text-foco-text, .text-foco-secondary {
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--foco-card);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #444;
+      }
+      
+      @keyframes pulse-soft {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+      .animate-pulse-soft {
+        animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

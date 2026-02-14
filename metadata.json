@@ -1,0 +1,7 @@
+{
+  "name": "Foco Total",
+  "description": "Uma aplicação completa de produtividade com cronômetro Pomodoro, sistema de revisão espaçada (Memory Guardian) e uma loja virtual para personalização, focada em maximizar o aprendizado e a retenção.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
